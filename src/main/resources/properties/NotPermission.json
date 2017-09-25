@@ -1,0 +1,10 @@
+[{
+  title : '@@notPermission.edit@@',
+  properties : [{
+    name : 'permission',
+    label : '@@notPermission.permission@@',
+    type : 'elementselect',
+    options_ajax : '[CONTEXT_PATH]/web/property/json/getElements?classname=org.joget.apps.form.model.FormPermission',
+    url : '[CONTEXT_PATH]/web/property/json[APP_PATH]/getPropertyOptions'
+  }]
+}]
