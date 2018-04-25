@@ -21,6 +21,9 @@ public class NotPermission extends UserviewPermission implements FormPermission 
         Plugin plugin = pluginManager.getPlugin(className);
         if(properties != null)
             ((PropertyEditable)plugin).setProperties(properties);
+
+        ((UserviewPermission)plugin).setFormData(getFormData());
+
         return !((UserviewPermission)plugin).isAuthorize();
     }
 
