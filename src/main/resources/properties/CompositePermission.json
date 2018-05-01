@@ -1,0 +1,35 @@
+[{
+  title : '@@compositePermission.edit@@',
+  properties : [
+    {
+      name : 'permission1',
+      label : '@@compositePermission.permission1@@',
+      type : 'elementselect',
+      options_ajax : '[CONTEXT_PATH]/web/property/json/getElements?classname=org.joget.apps.form.model.FormPermission',
+      url : '[CONTEXT_PATH]/web/property/json[APP_PATH]/getPropertyOptions'
+    },
+    {
+      name : 'condition',
+      label : '@@compositePermission.condition@@',
+      type : 'radio',
+      value : 'or'
+      options : [
+        {
+          value : 'or',
+          label : '@@compositePermission.or@@'
+        },
+        {
+          value : 'and',
+          label : '@@compositePermission.and@@'
+        }
+      ]
+    },
+    {
+      name : 'permission2',
+      label : '@@compositePermission.permission2@@',
+      type : 'elementselect',
+      options_ajax : '[CONTEXT_PATH]/web/property/json/getElements?classname=org.joget.apps.form.model.FormPermission',
+      url : '[CONTEXT_PATH]/web/property/json[APP_PATH]/getPropertyOptions'
+    }
+  ]
+}]

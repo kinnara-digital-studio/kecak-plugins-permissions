@@ -1,6 +1,6 @@
 package com.kinnara.kecakplugins.permissions;
 
-import EnhydraShark.App;
+import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
@@ -10,6 +10,11 @@ import org.joget.plugin.property.model.PropertyEditable;
 
 import java.util.Map;
 
+
+/**
+ * @author aristo
+ * Negation of particular permission
+ */
 public class NotPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
@@ -22,6 +27,7 @@ public class NotPermission extends UserviewPermission implements FormPermission 
         if(properties != null)
             ((PropertyEditable)plugin).setProperties(properties);
 
+        ((UserviewPermission)plugin).setCurrentUser(getCurrentUser());
         ((UserviewPermission)plugin).setFormData(getFormData());
 
         return !((UserviewPermission)plugin).isAuthorize();
@@ -29,7 +35,7 @@ public class NotPermission extends UserviewPermission implements FormPermission 
 
     @Override
     public String getName() {
-        return "Not Permission";
+        return AppPluginUtil.getMessage("notPermission.title", getClassName(), "/messages/NotPermission");
     }
 
     @Override
