@@ -1,0 +1,30 @@
+[{
+  title : '@@asReadonly.edit@@',
+  properties : [
+    {
+      name : 'permission',
+      label : '@@asReadonly.permission@@',
+      type : 'elementselect',
+      options_ajax : '[CONTEXT_PATH]/web/property/json/getElements?classname=org.joget.apps.userview.model.UserviewPermission',
+      url : '[CONTEXT_PATH]/web/property/json[APP_PATH]/getPropertyOptions'
+    },
+    {
+      name : 'formDefId',
+      label : 'Current Form',
+      type : 'selectbox',
+      required : 'true',
+      options_ajax : '[CONTEXT_PATH]/web/json/console/app[APP_PATH]/forms/options',
+      control_field: 'mode',
+      control_value: 'readonly'
+    },
+    {
+      name : 'elementId',
+      label : 'Element ID',
+      description : 'Element which need to be set as readonly, typically section / form',
+      type : 'textfield',
+      required : 'true',
+      control_field: 'mode',
+      control_value: 'readonly'
+    }
+  ]
+}]

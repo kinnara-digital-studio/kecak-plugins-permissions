@@ -28,7 +28,7 @@ public class CompositePermission extends UserviewPermission implements FormPermi
 
     @Override
     public String getName() {
-        return AppPluginUtil.getMessage("compositePermission.title", getClassName(), "/messages/CompositePermission.properties");
+        return AppPluginUtil.getMessage("compositePermission.title", getClassName(), "/messages/CompositePermission");
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CompositePermission extends UserviewPermission implements FormPermi
 
     @Override
     public String getPropertyOptions() {
-        return AppUtil.readPluginResource(getClassName(), "/properties/CompositePermission.json", null, false, "/messages/CompositePermission.properties");
+        return AppUtil.readPluginResource(getClassName(), "/properties/CompositePermission.json", null, false, "/messages/CompositePermission");
     }
 
     private UserviewPermission getPermissionObject(String permissionPropertyName) {
