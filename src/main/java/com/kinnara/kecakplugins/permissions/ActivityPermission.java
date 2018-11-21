@@ -21,13 +21,16 @@ public class ActivityPermission extends UserviewPermission implements FormPermis
     @Override
     public boolean isAuthorize() {
         final FormData formData = getFormData();
-
+        boolean nonAssignment = "true".equalsIgnoreCase(getPropertyString("nonAssignment"));
         if(formData == null) {
-            return false;
+            return nonAssignment;
         }
 
         WorkflowManager workflowManager = (WorkflowManager) AppUtil.getApplicationContext().getBean("workflowManager");
         WorkflowAssignment assignment = workflowManager.getAssignment(formData.getActivityId());
+        if(assignment == null) {
+            return nonAssignment;
+        }
 
         return Arrays.stream(getPropertyString("activities").split(";"))
                 .anyMatch(s -> s.equals(assignment.getActivityDefId()));

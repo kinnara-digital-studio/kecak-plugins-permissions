@@ -2,7 +2,19 @@
   {
     title : 'Edit @@activityPermission.title@@',
     properties : [
-      %s
+      %s,
+      {
+        name : 'nonAssignment',
+        label : '@@activityPermission.nonAssignment@@',
+        description : '@@activityPermission.nonAssignment.desc@@',
+        type : 'checkbox',
+        options : [
+          {
+            value : 'true',
+            label : ''
+          }
+        ]
+      }
     ]
   }
 ]
