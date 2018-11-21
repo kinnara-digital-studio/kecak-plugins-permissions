@@ -1,0 +1,8 @@
+[
+  {
+    title : 'Edit @@activityPermission.title@@',
+    properties : [
+      %s
+    ]
+  }
+]
