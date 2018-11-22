@@ -6,6 +6,7 @@ import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormData;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
+import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.Plugin;
 import org.joget.plugin.base.PluginManager;
 import org.joget.workflow.model.WorkflowActivity;
@@ -32,6 +33,7 @@ public class ActivityPermission extends UserviewPermission implements FormPermis
         }
 
         return Arrays.stream(getPropertyString("activities").split(";"))
+                .map(String::trim)
                 .anyMatch(s -> s.equals(assignment.getActivityDefId()));
     }
 
