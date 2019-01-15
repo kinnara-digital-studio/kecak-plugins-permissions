@@ -4,6 +4,7 @@ import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
+import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
 
 import java.util.Map;
@@ -15,9 +16,17 @@ import java.util.Map;
 public class CompositePermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
+        boolean debug = "true".equalsIgnoreCase(getPropertyString("debug"));
+
         // validate using validator1
         UserviewPermission validator1 = getPermissionObject("permission1");
         UserviewPermission validator2 = getPermissionObject("permission2");
+
+        if(debug) {
+            LogUtil.info(getClassName(), "Condition ["+getPropertyString("condition")+"]");
+            LogUtil.info(getClassName(), "Validator 1 class [" + validator1.getClassName() + "] result [" + validator1.isAuthorize() + "]");
+            LogUtil.info(getClassName(), "Validator 2 class [" + validator2.getClassName() + "] result [" + validator2.isAuthorize() + "]");
+        }
 
         if("and".equalsIgnoreCase(getPropertyString("condition"))) {
             return validator1.isAuthorize() && validator2.isAuthorize();
