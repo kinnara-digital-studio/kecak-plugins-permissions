@@ -23,9 +23,9 @@ public class CompositePermission extends UserviewPermission implements FormPermi
         UserviewPermission validator2 = getPermissionObject("permission2");
 
         if(debug) {
-            LogUtil.info(getClassName(), "Condition ["+getPropertyString("condition")+"]");
-            LogUtil.info(getClassName(), "Validator 1 class [" + validator1.getClassName() + "] result [" + validator1.isAuthorize() + "]");
-            LogUtil.info(getClassName(), "Validator 2 class [" + validator2.getClassName() + "] result [" + validator2.isAuthorize() + "]");
+            LogUtil.info(getClassName(), "Condition ["+getPropertyString("condition")+"] "
+                    + "validator 1 class [" + validator1.getClassName() + "] result [" + validator1.isAuthorize() + "] "
+                    + "validator 2 class [" + validator2.getClassName() + "] result [" + validator2.isAuthorize() + "]");
         }
 
         if("and".equalsIgnoreCase(getPropertyString("condition"))) {
