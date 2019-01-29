@@ -45,7 +45,7 @@ public class NotPermission extends UserviewPermission implements FormPermission 
 
     @Override
     public String getDescription() {
-        return "Kecak Plugins; Artifact ID : " + getClass().getPackage().getImplementationTitle();
+        return getClass().getPackage().getImplementationTitle();
     }
 
     @Override

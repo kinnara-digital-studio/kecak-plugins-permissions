@@ -22,7 +22,7 @@ public class IsAdminPermission extends UserviewPermission implements FormPermiss
 
     @Override
     public String getDescription() {
-        return "Kecak Plugins; Artifact ID : " + getClass().getPackage().getImplementationTitle();
+        return getClass().getPackage().getImplementationTitle();
     }
 
     @Override
