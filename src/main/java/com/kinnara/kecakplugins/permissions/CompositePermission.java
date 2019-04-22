@@ -7,6 +7,7 @@ import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
 
+import javax.rmi.CORBA.Util;
 import java.util.Map;
 
 /**
@@ -18,20 +19,20 @@ public class CompositePermission extends UserviewPermission implements FormPermi
     public boolean isAuthorize() {
         boolean debug = "true".equalsIgnoreCase(getPropertyString("debug"));
 
-        // validate using validator1
-        UserviewPermission validator1 = getPermissionObject("permission1");
-        UserviewPermission validator2 = getPermissionObject("permission2");
+        // validate using permission1
+        UserviewPermission permission1 = Utilities.getPermissionObject(this, "permission1");
+        UserviewPermission permission2 = Utilities.getPermissionObject(this, "permission2");
 
         if(debug) {
             LogUtil.info(getClassName(), "Condition ["+getPropertyString("condition")+"] "
-                    + "validator 1 class [" + validator1.getClassName() + "] result [" + validator1.isAuthorize() + "] "
-                    + "validator 2 class [" + validator2.getClassName() + "] result [" + validator2.isAuthorize() + "]");
+                    + "validator 1 class [" + permission1.getClassName() + "] result [" + permission1.isAuthorize() + "] "
+                    + "validator 2 class [" + permission2.getClassName() + "] result [" + permission2.isAuthorize() + "]");
         }
 
         if("and".equalsIgnoreCase(getPropertyString("condition"))) {
-            return validator1.isAuthorize() && validator2.isAuthorize();
+            return permission1.isAuthorize() && permission2.isAuthorize();
         } else {
-            return validator1.isAuthorize() || validator2.isAuthorize();
+            return permission1.isAuthorize() || permission2.isAuthorize();
         }
     }
 
@@ -63,22 +64,5 @@ public class CompositePermission extends UserviewPermission implements FormPermi
     @Override
     public String getPropertyOptions() {
         return AppUtil.readPluginResource(getClassName(), "/properties/CompositePermission.json", null, false, "/messages/CompositePermission");
-    }
-
-    private UserviewPermission getPermissionObject(String permissionPropertyName) {
-        PluginManager pluginManager = (PluginManager)AppUtil.getApplicationContext().getBean("pluginManager");
-        Map<String, Object> propertyPermission = (Map<String, Object>)getProperty(permissionPropertyName);
-
-        String className = (String)propertyPermission.get("className");
-        Map<String, Object> properties = (Map<String, Object>)propertyPermission.get("properties");
-
-        UserviewPermission permission = (UserviewPermission) pluginManager.getPlugin(className);
-        if(properties != null)
-            permission.setProperties(properties);
-
-        permission.setFormData(getFormData());
-        permission.setCurrentUser(getCurrentUser());
-
-        return permission;
     }
 }

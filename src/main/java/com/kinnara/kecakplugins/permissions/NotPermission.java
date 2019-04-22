@@ -18,19 +18,11 @@ import java.util.Map;
 public class NotPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        Map<String, Object> permission = (Map<String, Object>)getProperty("permission");
-        String className = (String) permission.get("className");
-        Map<String, Object> properties = permission == null ? null : (Map<String, Object>)permission.get("properties");
+        UserviewPermission plugin = Utilities.getPermissionObject(this, "permission");
+        if(plugin != null)
+            return !plugin.isAuthorize();
 
-        PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean("pluginManager");
-        Plugin plugin = pluginManager.getPlugin(className);
-        if(properties != null)
-            ((PropertyEditable)plugin).setProperties(properties);
-
-        ((UserviewPermission)plugin).setCurrentUser(getCurrentUser());
-        ((UserviewPermission)plugin).setFormData(getFormData());
-
-        return !((UserviewPermission)plugin).isAuthorize();
+        return true;
     }
 
     @Override
