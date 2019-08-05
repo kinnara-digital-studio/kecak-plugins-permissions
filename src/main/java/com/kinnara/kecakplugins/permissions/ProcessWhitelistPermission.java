@@ -6,11 +6,11 @@ import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
-import org.joget.commons.util.LogUtil;
 import org.joget.workflow.model.WorkflowProcess;
 import org.joget.workflow.model.service.WorkflowManager;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
 
@@ -23,8 +23,8 @@ public class ProcessWhitelistPermission extends UserviewPermission implements Fo
         Collection<WorkflowProcess> processList = workflowManager.getProcessList(packageDefinition.getId(), packageDefinition.getVersion().toString());
 
         return (processList == null ? Stream.<WorkflowProcess>empty() : processList.stream())
-                .peek(p -> LogUtil.info(getClassName(), "p ["+p.getIdWithoutVersion()+"] ["+p.getId()+"]"))
-                .filter(p -> p.getIdWithoutVersion().equalsIgnoreCase(getPropertyString("processId")))
+                .filter(p -> Arrays.stream(getPropertyString("processId").split(";"))
+                        .anyMatch(s -> s.equalsIgnoreCase(p.getIdWithoutVersion())))
                 .anyMatch(p -> workflowManager.isUserInWhiteList(p.getId()));
     }
 
@@ -56,6 +56,6 @@ public class ProcessWhitelistPermission extends UserviewPermission implements Fo
     @Override
     public String getPropertyOptions() {
         AppDefinition appDefinition = AppUtil.getCurrentAppDefinition();
-        return AppUtil.readPluginResource(getClassName(), "/properties/ProcessWhitelistPermission.json", new String[] {appDefinition.getAppId(), String.valueOf(appDefinition.getVersion())}, false, "/messages/ProcessWhitelistPermission");
+        return AppUtil.readPluginResource(getClassName(), "/properties/ProcessWhitelistPermission.json", new String[]{appDefinition.getAppId(), String.valueOf(appDefinition.getVersion())}, false, "/messages/ProcessWhitelistPermission");
     }
 }

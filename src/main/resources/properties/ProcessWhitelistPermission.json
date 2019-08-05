@@ -5,7 +5,7 @@
       {
         name : 'processId',
         label : '@@procesWhitelistPermission.processId@@',
-        type : 'selectbox',
+        type : 'multiselect',
         options_ajax : '[CONTEXT_PATH]/web/json/app/%s/%s/plugin/org.joget.apps.userview.lib.InboxMenu/service?action=getProcesses'
       }
     ]

@@ -23,6 +23,7 @@ public class Activator implements BundleActivator {
         registrationList.add(context.registerService(ProcessCreatorPermission.class.getName(), new ProcessCreatorPermission(), null));
         registrationList.add(context.registerService(ActivityPermission.class.getName(), new ActivityPermission(), null));
         registrationList.add(context.registerService(AlwaysTruePermission.class.getName(), new AlwaysTruePermission(), null));
+        registrationList.add(context.registerService(ReadOnlyPermission.class.getName(), new ReadOnlyPermission(), null));
     }
 
     public void stop(BundleContext context) {

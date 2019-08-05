@@ -1,10 +1,11 @@
 package com.kinnara.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppPluginUtil;
+import org.joget.apps.form.model.DefaultFormPermission;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 
-public class AlwaysTruePermission extends UserviewPermission implements FormPermission {
+public class AlwaysTruePermission extends DefaultFormPermission {
     @Override
     public boolean isAuthorize() {
         return true;

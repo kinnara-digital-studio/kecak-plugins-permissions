@@ -2,6 +2,7 @@ package com.kinnara.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
+import org.joget.apps.form.model.DefaultFormPermission;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.commons.util.LogUtil;
@@ -14,7 +15,7 @@ import java.util.Map;
  * @author aristo
  * Execute 2 permission
  */
-public class CompositePermission extends UserviewPermission implements FormPermission {
+public class CompositePermission extends DefaultFormPermission {
     @Override
     public boolean isAuthorize() {
         boolean debug = "true".equalsIgnoreCase(getPropertyString("debug"));
@@ -25,15 +26,19 @@ public class CompositePermission extends UserviewPermission implements FormPermi
 
         if(debug) {
             LogUtil.info(getClassName(), "Condition ["+getPropertyString("condition")+"] "
-                    + "validator 1 class [" + permission1.getClassName() + "] result [" + permission1.isAuthorize() + "] "
-                    + "validator 2 class [" + permission2.getClassName() + "] result [" + permission2.isAuthorize() + "]");
+                    + "validator 1 class [" + (permission1 == null ? "" : permission1.getClassName()) + "] result [" + permission1.isAuthorize() + "] "
+                    + "validator 2 class [" + (permission2 == null ? "" : permission2.getClassName()) + "] result [" + permission2.isAuthorize() + "]");
         }
 
         if("and".equalsIgnoreCase(getPropertyString("condition"))) {
-            return permission1.isAuthorize() && permission2.isAuthorize();
+            return isAuthorized(permission1) && isAuthorized(permission2);
         } else {
-            return permission1.isAuthorize() || permission2.isAuthorize();
+            return isAuthorized(permission1) || isAuthorized(permission2);
         }
+    }
+
+    protected boolean isAuthorized(UserviewPermission permission) {
+        return permission == null || permission.isAuthorize();
     }
 
     @Override

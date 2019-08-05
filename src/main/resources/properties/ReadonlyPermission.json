@@ -1,0 +1,26 @@
+[
+  {
+    title : 'Edit @@readonlyPermission.title@@',
+    properties : [
+      {
+        name : 'permission',
+        label : '@@readonlyPermission.permission@@',
+        type : 'elementselect',
+        options_ajax : '[CONTEXT_PATH]/web/property/json/getElements?classname=org.joget.apps.form.model.FormPermission',
+        url : '[CONTEXT_PATH]/web/property/json[APP_PATH]/getPropertyOptions'
+      },
+      {
+        name : 'readonlyLabel',
+        label : '@@readonlyPermission.readonlyLabel@@',
+        type : 'checkbox',
+        value : '',
+        options : [
+          {
+            value : 'true',
+            label : ''
+          }
+        ]
+      }
+    ]
+  }
+]
