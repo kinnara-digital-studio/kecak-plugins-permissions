@@ -83,23 +83,6 @@ public class ActivityPermission extends DefaultFormPermission implements PluginW
 
     @Override
     public String getPropertyOptions() {
-//        AppDefinition appDefinition = AppUtil.getCurrentAppDefinition();
-//        JSONObject activitiesProperty = new JSONObject();
-//        try {
-//            activitiesProperty.put("name", "activities");
-//            activitiesProperty.put("label", "@@activityPermission.activities@@");
-//            if(appDefinition != null && isClassInstalled("com.kinnara.kecakplugins.workflowcomponentoptionsbinder.ActivityOptionsBinder")) {
-//                String appId = appDefinition.getAppId();
-//                String appVersion = appDefinition.getVersion().toString();
-//                activitiesProperty.put("type", "multiselect");
-//                activitiesProperty.put("options_ajax","[CONTEXT_PATH]/web/json/app[APP_PATH]/plugin/com.kinnara.kecakplugins.workflowcomponentoptionsbinder.ActivityOptionsBinder/service?appId="+appId + "&appVersion=" + appVersion + "&type=" + WorkflowActivity.TYPE_NORMAL);
-//            } else {
-//                activitiesProperty.put("type", "textfield");
-//            }
-//        } catch (JSONException ignored) { }
-//
-//        String[] args = { activitiesProperty.toString().replaceAll("\"", "'") };
-//        return AppUtil.readPluginResource(getClassName(), "/properties/ActivityPermission.json", args, false, "/messages/ActivityPermission");
         Object[] arguments = new Object[]{getClassName(), getClassName()};
         return AppUtil.readPluginResource(getClassName(), "/properties/ActivityPermission.json", arguments, false, "/messages/ActivityPermission");
     }
