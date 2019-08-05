@@ -46,10 +46,7 @@ public class ActivityPermission extends DefaultFormPermission implements PluginW
             return nonAssignment;
         }
 
-        LogUtil.info(getClassName(), "processId ["+assignment.getProcessDefId()+"] activityId ["+assignment.getActivityDefId()+"]");
-
         String processId = getPropertyString("processId");
-
         Matcher processIdMatcher = Pattern.compile("(?<=#)" + processId + "$").matcher(assignment.getProcessDefId());
 
         // processid matched and activities matched;
