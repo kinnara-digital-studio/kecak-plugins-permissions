@@ -7,12 +7,13 @@ import org.joget.apps.form.model.FormData;
 import org.joget.apps.form.service.FormUtil;
 import org.joget.apps.userview.model.UserviewPermission;
 
-public class ReadOnlyPermission extends DefaultFormPermission {
+public class EditablePermission extends DefaultFormPermission {
     @Override
     public boolean isAuthorize() {
-        UserviewPermission plugin = Utilities.getPermissionObject(this, "permission");
+        UserviewPermission editabilityPermission = Utilities.getPermissionObject(this, "editabilityPermission");
+        UserviewPermission visibilityPermission = Utilities.getPermissionObject(this, "visibilityPermission");
 
-        final boolean hasPermission = (plugin == null || plugin.isAuthorize());
+        final boolean isEditable = (editabilityPermission == null || editabilityPermission.isAuthorize());
         final boolean readonlyLabel = "true".equalsIgnoreCase(getPropertyString(FormUtil.PROPERTY_READONLY_LABEL));
 
         // process the element based on permission
@@ -22,18 +23,20 @@ public class ReadOnlyPermission extends DefaultFormPermission {
         if(formData != null && element != null) {
             element.getChildren(formData)
                     .forEach(e -> {
-                        if (!hasPermission) {
+                        if (!isEditable) {
                             // if don't have write access, set as readonly
                             FormUtil.setReadOnlyProperty(e, true, readonlyLabel);
                         }
                     });
         }
-        return true;
+
+        // is visible
+        return (visibilityPermission == null || visibilityPermission.isAuthorize());
     }
 
     @Override
     public String getName() {
-        return "Read-Only Permission";
+        return "Editable Permission";
     }
 
     @Override
@@ -58,6 +61,6 @@ public class ReadOnlyPermission extends DefaultFormPermission {
 
     @Override
     public String getPropertyOptions() {
-        return AppUtil.readPluginResource(getClassName(), "/properties/ReadonlyPermission.json", null, false, "/messages/ReadonlyPermission");
+        return AppUtil.readPluginResource(getClassName(), "/properties/EditablePermission.json", null, false, "/messages/EditablePermission");
     }
 }

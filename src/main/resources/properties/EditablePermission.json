@@ -3,9 +3,10 @@
     title : 'Edit @@readonlyPermission.title@@',
     properties : [
       {
-        name : 'permission',
+        name : 'editabilityPermission',
         label : '@@readonlyPermission.permission@@',
         type : 'elementselect',
+        required: 'true',
         options_ajax : '[CONTEXT_PATH]/web/property/json/getElements?classname=org.joget.apps.form.model.FormPermission',
         url : '[CONTEXT_PATH]/web/property/json[APP_PATH]/getPropertyOptions'
       },
@@ -20,6 +21,13 @@
             label : ''
           }
         ]
+      },
+      {
+        name : 'visibilityPermission',
+        label : '@@readonlyPermission.visibilityPermission@@',
+        type : 'elementselect',
+        options_ajax : '[CONTEXT_PATH]/web/property/json/getElements?classname=org.joget.apps.form.model.FormPermission',
+        url : '[CONTEXT_PATH]/web/property/json[APP_PATH]/getPropertyOptions'
       }
     ]
   }
