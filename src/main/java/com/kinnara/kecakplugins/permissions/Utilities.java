@@ -15,21 +15,15 @@ public class Utilities {
             return null;
 
         String className = (String)propertyPermission.get("className");
-        Map<String, Object> properties = (Map<String, Object>)propertyPermission.get("properties");
-
         UserviewPermission permission = (UserviewPermission) pluginManager.getPlugin(className);
         if(permission == null)
             return null;
 
+        Map<String, Object> properties = (Map<String, Object>)propertyPermission.get("properties");
         if(properties != null)
             permission.setProperties(properties);
 
-        if(permission instanceof FormPermission && plugin instanceof FormPermission) {
-            ((FormPermission)permission).setFormData(((FormPermission)plugin).getFormData());
-            ((FormPermission)permission).setFormData(((FormPermission)plugin).getFormData());
-        }
-
-
+        permission.setFormData(plugin.getFormData());
         permission.setCurrentUser(plugin.getCurrentUser());
 
         return permission;
