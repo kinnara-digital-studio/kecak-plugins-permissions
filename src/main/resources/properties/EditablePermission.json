@@ -4,7 +4,7 @@
     properties : [
       {
         name : 'editabilityPermission',
-        label : '@@readonlyPermission.permission@@',
+        label : '@@readonlyPermission.editabilityPermission@@',
         type : 'elementselect',
         required: 'true',
         options_ajax : '[CONTEXT_PATH]/web/property/json/getElements?classname=org.joget.apps.form.model.FormPermission',
