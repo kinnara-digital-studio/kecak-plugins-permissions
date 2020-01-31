@@ -7,6 +7,12 @@ import org.joget.apps.form.model.FormData;
 import org.joget.apps.form.service.FormUtil;
 import org.joget.apps.userview.model.UserviewPermission;
 
+/**
+ * @author aristo
+ *
+ * Make objects readonly if don't have permission instead of invisible
+ *
+ */
 public class EditablePermission extends DefaultFormPermission {
     @Override
     public boolean isAuthorize() {

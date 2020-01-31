@@ -25,6 +25,7 @@ public class Activator implements BundleActivator {
         registrationList.add(context.registerService(AlwaysTruePermission.class.getName(), new AlwaysTruePermission(), null));
         registrationList.add(context.registerService(AlwaysFalsePermission.class.getName(), new AlwaysFalsePermission(), null));
         registrationList.add(context.registerService(EditablePermission.class.getName(), new EditablePermission(), null));
+        registrationList.add(context.registerService(IsReadOnlyPermission.class.getName(), new IsReadOnlyPermission(), null));
     }
 
     public void stop(BundleContext context) {
