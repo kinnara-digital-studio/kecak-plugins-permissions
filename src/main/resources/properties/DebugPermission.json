@@ -1,0 +1,13 @@
+[
+  {
+    "title": "Debug Permission",
+    "properties": [
+      {
+        "name": "parameter",
+        "label": "Parameter",
+        "type": "textfield",
+        "required": "true"
+      }
+    ]
+  }
+]
