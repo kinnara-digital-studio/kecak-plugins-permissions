@@ -1,11 +1,12 @@
 package com.kinnara.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppUtil;
-import org.joget.apps.form.model.DefaultFormPermission;
 import org.joget.apps.form.model.Element;
 import org.joget.apps.form.model.FormData;
+import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.form.service.FormUtil;
 import org.joget.apps.userview.model.UserviewPermission;
+import org.kecak.apps.form.model.FormPermissionDefault;
 
 /**
  * @author aristo
@@ -13,7 +14,7 @@ import org.joget.apps.userview.model.UserviewPermission;
  * Make objects readonly if don't have permission instead of invisible
  *
  */
-public class EditablePermission extends DefaultFormPermission {
+public class EditablePermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
         UserviewPermission editabilityPermission = Utilities.getPermissionObject(this, "editabilityPermission");

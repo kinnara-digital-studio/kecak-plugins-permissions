@@ -5,7 +5,6 @@ import org.joget.apps.app.model.PackageDefinition;
 import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppService;
 import org.joget.apps.app.service.AppUtil;
-import org.joget.apps.form.model.DefaultFormPermission;
 import org.joget.apps.form.model.FormData;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
@@ -31,7 +30,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ActivityPermission extends DefaultFormPermission implements PluginWebSupport {
+public class ActivityPermission extends UserviewPermission implements FormPermission, PluginWebSupport {
     @Override
     public boolean isAuthorize() {
         final FormData formData = getFormData();

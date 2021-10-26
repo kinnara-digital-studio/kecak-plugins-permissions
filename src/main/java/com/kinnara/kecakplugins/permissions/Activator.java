@@ -27,6 +27,7 @@ public class Activator implements BundleActivator {
         registrationList.add(context.registerService(EditablePermission.class.getName(), new EditablePermission(), null));
         registrationList.add(context.registerService(IsReadOnlyPermission.class.getName(), new IsReadOnlyPermission(), null));
         registrationList.add(context.registerService(OnDataCreationPermission.class.getName(), new OnDataCreationPermission(), null));
+//        registrationList.add(context.registerService(OrganizationPermission.class.getName(), new OrganizationPermission(), null));
         registrationList.add(context.registerService(DebugPermission.class.getName(), new DebugPermission(), null));
     }
 

@@ -2,20 +2,15 @@ package com.kinnara.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
-import org.joget.apps.form.model.DefaultFormPermission;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.commons.util.LogUtil;
-import org.joget.plugin.base.PluginManager;
-
-import javax.rmi.CORBA.Util;
-import java.util.Map;
 
 /**
  * @author aristo
  * Execute 2 permission
  */
-public class CompositePermission extends DefaultFormPermission {
+public class CompositePermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
         boolean debug = "true".equalsIgnoreCase(getPropertyString("debug"));

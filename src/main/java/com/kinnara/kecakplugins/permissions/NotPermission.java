@@ -4,11 +4,6 @@ import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
-import org.joget.plugin.base.Plugin;
-import org.joget.plugin.base.PluginManager;
-import org.joget.plugin.property.model.PropertyEditable;
-
-import java.util.Map;
 
 
 /**

@@ -1,8 +1,8 @@
 package com.kinnara.kecakplugins.permissions;
 
-import org.joget.apps.form.model.DefaultFormPermission;
+import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.form.service.FormUtil;
-import org.joget.commons.util.LogUtil;
+import org.joget.apps.userview.model.UserviewPermission;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -16,7 +16,7 @@ import java.util.Optional;
  * Return true if placed in non form
  *
  */
-public class IsReadOnlyPermission extends DefaultFormPermission {
+public class IsReadOnlyPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
         return Optional.ofNullable(getElement())

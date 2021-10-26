@@ -23,7 +23,10 @@ public class Utilities {
         if(properties != null)
             permission.setProperties(properties);
 
-        permission.setFormData(plugin.getFormData());
+        if(permission instanceof FormPermission && plugin instanceof FormPermission) {
+            ((FormPermission)permission).setFormData(((FormPermission)plugin).getFormData());
+        }
+
         permission.setCurrentUser(plugin.getCurrentUser());
 
         return permission;
