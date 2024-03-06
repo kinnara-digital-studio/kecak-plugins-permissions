@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.kinnara.kecakplugins.permissions</groupId>
+    <groupId>com.kinnarastudio.kecakplugins.permissions</groupId>
     <artifactId>kecak-plugins-permissions</artifactId>
     <packaging>bundle</packaging>
-    <version>1.0.0</version>
+    <version>3.0.0</version>
     <name>kecak-plugins-permissions</name>
-    <url>http://www.joget.org</url>
+    <url>http://www.kecak.org</url>
+    <scm>
+        <connection>scm:git:ssh://git@github.com:kinnara-digital-studio/kecak-plugins-permissions.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:kinnara-digital-studio/kecak-plugins-permissions.git</developerConnection>
+        <url>ssh://git@github.com:kinnara-digital-studio/kecak-plugins-permissions.git</url>
+        <tag>HEAD</tag>
+    </scm>
     <build>
         <plugins>
             <plugin>
@@ -51,6 +57,26 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <revisionOnScmFailure>0</revisionOnScmFailure>
+                    <shortRevisionLength>8</shortRevisionLength>
+                    <timestampFormat>{0,date,yyyy}</timestampFormat>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
@@ -71,6 +97,22 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
     <dependencies>
         <dependency>
@@ -94,8 +136,18 @@
         <dependency>
             <groupId>org.joget</groupId>
             <artifactId>wflow-core</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>7.0-SNAPSHOT</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Change plugin specific dependencies here -->
         <dependency>
@@ -105,14 +157,4 @@
         </dependency>
         <!-- End change plugin specific dependencies here -->
     </dependencies>
-    <distributionManagement>
-        <repository>
-            <id>internal</id>
-            <url>http://dev.joget.org/archiva/repository/internal</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://dev.joget.org/archiva/repository/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

@@ -1,11 +1,14 @@
 package com.kinnara.kecakplugins.permissions;
 
+import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.form.service.FormUtil;
 import org.joget.apps.userview.model.UserviewPermission;
+import org.joget.plugin.base.PluginManager;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 /**
  * @author aristo
@@ -32,7 +35,10 @@ public class IsReadOnlyPermission extends UserviewPermission implements FormPerm
 
     @Override
     public String getVersion() {
-        return getClass().getPackage().getImplementationVersion();
+        PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean("pluginManager");
+        ResourceBundle resourceBundle = pluginManager.getPluginMessageBundle(getClassName(), "/messages/BuildNumber");
+        String buildNumber = resourceBundle.getString("buildNumber");
+        return buildNumber;
     }
 
     @Override

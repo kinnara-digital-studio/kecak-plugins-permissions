@@ -3,9 +3,12 @@ package com.kinnara.kecakplugins.permissions;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
+import org.joget.plugin.base.PluginManager;
 import org.joget.workflow.model.WorkflowProcess;
 import org.joget.workflow.model.service.WorkflowManager;
 import org.springframework.context.ApplicationContext;
+
+import java.util.ResourceBundle;
 
 public class ProcessCreatorPermission extends UserviewPermission implements FormPermission {
     @Override
@@ -27,7 +30,10 @@ public class ProcessCreatorPermission extends UserviewPermission implements Form
 
     @Override
     public String getVersion() {
-        return getClass().getPackage().getImplementationVersion();
+        PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean("pluginManager");
+        ResourceBundle resourceBundle = pluginManager.getPluginMessageBundle(getClassName(), "/messages/BuildNumber");
+        String buildNumber = resourceBundle.getString("buildNumber");
+        return buildNumber;
     }
 
     @Override
