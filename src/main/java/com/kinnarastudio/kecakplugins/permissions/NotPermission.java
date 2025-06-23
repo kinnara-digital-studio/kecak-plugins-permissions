@@ -1,30 +1,31 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
+import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
-import org.joget.apps.form.model.FormData;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
 
-import java.util.Optional;
 import java.util.ResourceBundle;
+
 
 /**
  * @author aristo
- *
- * Returns true when contains no data (form data or primary key is NULL)
+ * Negation of particular permission
  */
-public class OnDataCreationPermission extends UserviewPermission implements FormPermission {
+public class NotPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        return !Optional.ofNullable(getFormData())
-                .map(FormData::getPrimaryKeyValue)
-                .isPresent();
+        UserviewPermission plugin = Utilities.getPermissionObject(this, "permission");
+        if(plugin != null)
+            return !plugin.isAuthorize();
+
+        return true;
     }
 
     @Override
     public String getName() {
-        return "On Data Creation Permission";
+        return AppPluginUtil.getMessage("notPermission.title", getClassName(), "/messages/NotPermission");
     }
 
     @Override
@@ -52,6 +53,6 @@ public class OnDataCreationPermission extends UserviewPermission implements Form
 
     @Override
     public String getPropertyOptions() {
-        return "";
+        return AppUtil.readPluginResource(getClassName(), "/properties/NotPermission.json", null, true, "/messages/NotPermission");
     }
 }

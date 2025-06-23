@@ -1,22 +1,26 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
-import org.joget.workflow.util.WorkflowUtil;
 
 import java.util.ResourceBundle;
 
-public class IsAnonymousPermission extends UserviewPermission implements FormPermission {
+/**
+ * @author aristo
+ *
+ * Get permission for current organization
+ */
+public class OrganizationPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        return WorkflowUtil.isCurrentUserAnonymous();
+        return false;
     }
 
     @Override
     public String getName() {
-        return "Is Anonymous";
+        return getLabel() + getVersion();
     }
 
     @Override
@@ -34,7 +38,7 @@ public class IsAnonymousPermission extends UserviewPermission implements FormPer
 
     @Override
     public String getLabel() {
-        return getName();
+        return "Organization Permission";
     }
 
     @Override
@@ -44,6 +48,6 @@ public class IsAnonymousPermission extends UserviewPermission implements FormPer
 
     @Override
     public String getPropertyOptions() {
-        return "";
+        return null;
     }
 }

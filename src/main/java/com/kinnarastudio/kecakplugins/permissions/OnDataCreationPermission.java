@@ -1,31 +1,30 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppUtil;
+import org.joget.apps.form.model.FormData;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
-import org.joget.workflow.model.WorkflowProcess;
-import org.joget.workflow.model.service.WorkflowManager;
-import org.springframework.context.ApplicationContext;
 
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ProcessCreatorPermission extends UserviewPermission implements FormPermission {
+/**
+ * @author aristo
+ *
+ * Returns true when contains no data (form data or primary key is NULL)
+ */
+public class OnDataCreationPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        if(getFormData() == null || getFormData().getPrimaryKeyValue() == null)
-            return true;
-
-        ApplicationContext appContext = AppUtil.getApplicationContext();
-        WorkflowManager workflowManager = (WorkflowManager) appContext.getBean("workflowManager");
-
-        WorkflowProcess process = workflowManager.getRunningProcessById(getFormData().getPrimaryKeyValue());
-        return process.getRequesterId().equals(getCurrentUser().getUsername());
+        return !Optional.ofNullable(getFormData())
+                .map(FormData::getPrimaryKeyValue)
+                .isPresent();
     }
 
     @Override
     public String getName() {
-        return "Process Creator Permission";
+        return "On Data Creation Permission";
     }
 
     @Override

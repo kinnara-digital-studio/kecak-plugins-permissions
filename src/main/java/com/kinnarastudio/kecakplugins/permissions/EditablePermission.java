@@ -1,4 +1,4 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.Element;
@@ -7,7 +7,6 @@ import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.form.service.FormUtil;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
-import org.kecak.apps.form.model.FormPermissionDefault;
 
 import java.util.ResourceBundle;
 

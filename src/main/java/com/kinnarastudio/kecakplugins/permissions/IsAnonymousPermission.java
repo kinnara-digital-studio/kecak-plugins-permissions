@@ -1,22 +1,22 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
-import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
+import org.joget.workflow.util.WorkflowUtil;
 
 import java.util.ResourceBundle;
 
-public class AlwaysFalsePermission extends UserviewPermission implements FormPermission {
+public class IsAnonymousPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        return false;
+        return WorkflowUtil.isCurrentUserAnonymous();
     }
 
     @Override
     public String getName() {
-        return AppPluginUtil.getMessage("alwaysFalsePermission.title", getClassName(), "/messages/AlwaysFalsePermission");
+        return "Is Anonymous";
     }
 
     @Override

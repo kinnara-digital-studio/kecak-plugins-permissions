@@ -1,4 +1,4 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
@@ -8,8 +8,7 @@ import org.joget.plugin.base.PluginManager;
 
 import java.util.ResourceBundle;
 
-// TODO
-public class VariablesPermission extends UserviewPermission implements FormPermission {
+public class AlwaysFalsePermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
         return false;
@@ -17,7 +16,7 @@ public class VariablesPermission extends UserviewPermission implements FormPermi
 
     @Override
     public String getName() {
-        return getLabel();
+        return AppPluginUtil.getMessage("alwaysFalsePermission.title", getClassName(), "/messages/AlwaysFalsePermission");
     }
 
     @Override
@@ -35,7 +34,7 @@ public class VariablesPermission extends UserviewPermission implements FormPermi
 
     @Override
     public String getLabel() {
-        return AppPluginUtil.getMessage("variablesPermission.title", getClassName(), "/messages/VariablesPermission");
+        return getName();
     }
 
     @Override
@@ -45,6 +44,6 @@ public class VariablesPermission extends UserviewPermission implements FormPermi
 
     @Override
     public String getPropertyOptions() {
-        return null;
+        return "";
     }
 }

@@ -1,0 +1,48 @@
+[
+  {
+    "title": "@@dateTimePermission.title@@",
+    "properties": [
+      {
+        "name": "dateTimeFormat",
+        "label": "@@dateTimePermission.dateTimeFormat@@",
+        "description": "@@dateTimePermission.dateTimeFormat.desc@@",
+        "type": "textfield",
+        "required": "true",
+        "value": "dd-MM-yyyy"
+      },
+      {
+        "name": "operator",
+        "label": "@@dateTimePermission.operator@@",
+        "description": "@@dateTimePermission.operator.desc@@",
+        "type": "selectbox",
+        "required": "=",
+        "options": [
+          {
+            "value": "=",
+            "label": "@@dateTimePermission.operator.equals@@"
+          },
+          {
+            "value": ">",
+            "label": "@@dateTimePermission.operator.after@@"
+          },
+          {
+            "value": "<",
+            "label": "@@dateTimePermission.operator.before@@"
+          },
+          {
+            "value": "<>",
+            "label": "@@dateTimePermission.operator.notEquals@@"
+          }
+        ]
+      },
+      {
+        "name": "values",
+        "label": "@@dateTimePermission.values@@",
+        "description": "@@dateTimePermission.values.desc@@",
+        "type": "textfield",
+        "required": "true",
+        "value": "%s"
+      }
+    ]
+  }
+]

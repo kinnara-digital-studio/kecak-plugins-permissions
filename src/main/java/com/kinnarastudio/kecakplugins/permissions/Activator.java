@@ -1,4 +1,4 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -29,6 +29,7 @@ public class Activator implements BundleActivator {
         registrationList.add(context.registerService(OnDataCreationPermission.class.getName(), new OnDataCreationPermission(), null));
 //        registrationList.add(context.registerService(OrganizationPermission.class.getName(), new OrganizationPermission(), null));
         registrationList.add(context.registerService(DebugPermission.class.getName(), new DebugPermission(), null));
+        registrationList.add(context.registerService(DateTimePermission.class.getName(), new DateTimePermission(), null));
     }
 
     public void stop(BundleContext context) {

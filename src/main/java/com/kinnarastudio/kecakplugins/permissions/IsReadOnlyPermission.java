@@ -1,22 +1,36 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
-import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
+import org.joget.apps.form.service.FormUtil;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AlwaysTruePermission extends UserviewPermission implements FormPermission {
+/**
+ * @author aristo
+ * Supposed to be used in form
+ *
+ * Return true if current form element is readonly
+ *
+ * Return true if placed in non form
+ *
+ */
+public class IsReadOnlyPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        return true;
+        return Optional.ofNullable(getElement())
+                .filter(e -> Objects.nonNull(getFormData()))
+                .map(e -> FormUtil.isReadonly(e, getFormData()))
+                .orElse(true);
     }
 
     @Override
     public String getName() {
-        return AppPluginUtil.getMessage("alwaysTruePermission.title", getClassName(), "/messages/AlwaysTruePermission");
+        return "Is Read-only Permission";
     }
 
     @Override

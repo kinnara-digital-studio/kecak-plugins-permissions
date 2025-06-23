@@ -1,29 +1,31 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
-import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
+import org.joget.workflow.model.WorkflowProcess;
+import org.joget.workflow.model.service.WorkflowManager;
+import org.springframework.context.ApplicationContext;
 
 import java.util.ResourceBundle;
 
-/**
- * @author aristo
- *
- * For testing and debugging purpose
- *
- */
-public class DebugPermission extends UserviewPermission implements FormPermission {
+public class ProcessCreatorPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        LogUtil.info(getClass().getName(), "isAuthorize [" + getPropertyParameter() + "]");
-        return !"false".equalsIgnoreCase(getPropertyParameter());
+        if(getFormData() == null || getFormData().getPrimaryKeyValue() == null)
+            return true;
+
+        ApplicationContext appContext = AppUtil.getApplicationContext();
+        WorkflowManager workflowManager = (WorkflowManager) appContext.getBean("workflowManager");
+
+        WorkflowProcess process = workflowManager.getRunningProcessById(getFormData().getPrimaryKeyValue());
+        return process.getRequesterId().equals(getCurrentUser().getUsername());
     }
 
     @Override
     public String getName() {
-        return getClass().getName();
+        return "Process Creator Permission";
     }
 
     @Override
@@ -41,7 +43,7 @@ public class DebugPermission extends UserviewPermission implements FormPermissio
 
     @Override
     public String getLabel() {
-        return "Debug Permission";
+        return getName();
     }
 
     @Override
@@ -51,10 +53,6 @@ public class DebugPermission extends UserviewPermission implements FormPermissio
 
     @Override
     public String getPropertyOptions() {
-        return AppUtil.readPluginResource(getClass().getName(), "/properties/DebugPermission.json", null, false, null);
-    }
-
-    private String getPropertyParameter() {
-        return AppUtil.processHashVariable(getPropertyString("parameter"), null, null, null);
+        return "";
     }
 }

@@ -1,4 +1,4 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.model.AppDefinition;
 import org.joget.apps.app.model.PackageDefinition;

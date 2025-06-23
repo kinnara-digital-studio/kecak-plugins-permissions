@@ -1,4 +1,4 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
@@ -8,24 +8,15 @@ import org.joget.plugin.base.PluginManager;
 
 import java.util.ResourceBundle;
 
-
-/**
- * @author aristo
- * Negation of particular permission
- */
-public class NotPermission extends UserviewPermission implements FormPermission {
+public class AlwaysTruePermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        UserviewPermission plugin = Utilities.getPermissionObject(this, "permission");
-        if(plugin != null)
-            return !plugin.isAuthorize();
-
         return true;
     }
 
     @Override
     public String getName() {
-        return AppPluginUtil.getMessage("notPermission.title", getClassName(), "/messages/NotPermission");
+        return AppPluginUtil.getMessage("alwaysTruePermission.title", getClassName(), "/messages/AlwaysTruePermission");
     }
 
     @Override
@@ -53,6 +44,6 @@ public class NotPermission extends UserviewPermission implements FormPermission 
 
     @Override
     public String getPropertyOptions() {
-        return AppUtil.readPluginResource(getClassName(), "/properties/NotPermission.json", null, true, "/messages/NotPermission");
+        return "";
     }
 }

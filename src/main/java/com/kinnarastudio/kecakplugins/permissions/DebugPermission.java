@@ -1,8 +1,9 @@
-package com.kinnara.kecakplugins.permissions;
+package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
+import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
 
 import java.util.ResourceBundle;
@@ -10,17 +11,19 @@ import java.util.ResourceBundle;
 /**
  * @author aristo
  *
- * Get permission for current organization
+ * For testing and debugging purpose
+ *
  */
-public class OrganizationPermission extends UserviewPermission implements FormPermission {
+public class DebugPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        return false;
+        LogUtil.info(getClass().getName(), "isAuthorize [" + getPropertyParameter() + "]");
+        return !"false".equalsIgnoreCase(getPropertyParameter());
     }
 
     @Override
     public String getName() {
-        return getLabel() + getVersion();
+        return getClass().getName();
     }
 
     @Override
@@ -38,7 +41,7 @@ public class OrganizationPermission extends UserviewPermission implements FormPe
 
     @Override
     public String getLabel() {
-        return "Organization Permission";
+        return "Debug Permission";
     }
 
     @Override
@@ -48,6 +51,10 @@ public class OrganizationPermission extends UserviewPermission implements FormPe
 
     @Override
     public String getPropertyOptions() {
-        return null;
+        return AppUtil.readPluginResource(getClass().getName(), "/properties/DebugPermission.json", null, false, null);
+    }
+
+    private String getPropertyParameter() {
+        return AppUtil.processHashVariable(getPropertyString("parameter"), null, null, null);
     }
 }
