@@ -5,6 +5,7 @@ import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.Permission;
 import org.joget.apps.userview.model.UserviewAccessPermission;
+import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
 
 import java.text.DateFormat;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Date Time Permission
@@ -24,8 +26,13 @@ public class DateTimePermission extends Permission implements FormPermission, Us
     @Override
     public boolean isAuthorize() {
         final Date now = new Date();
+
         final String operator = getOperator();
+        LogUtil.info(getClassName(), "operator [" + operator + "]");
+
         final Date[] values = getValues();
+        LogUtil.info(getClassName(), "values [" + Arrays.stream(values).map(Date::toString).collect(Collectors.joining("; ")) + "]");
+
         switch (operator) {
             case "=":
                 return Arrays.asList(values).contains(now);
