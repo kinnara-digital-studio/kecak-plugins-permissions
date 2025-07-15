@@ -2,10 +2,12 @@ package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormData;
+import org.joget.plugin.base.PluginManager;
 import org.joget.workflow.model.service.WorkflowManager;
 import org.kecak.apps.form.model.FormPermissionDefault;
 
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 /**
  * User Assignment Permission
@@ -32,7 +34,10 @@ public class UserAssignmentPermission extends FormPermissionDefault {
 
     @Override
     public String getVersion() {
-        return "";
+        PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean("pluginManager");
+        ResourceBundle resourceBundle = pluginManager.getPluginMessageBundle(getClassName(), "/messages/BuildNumber");
+        String buildNumber = resourceBundle.getString("buildNumber");
+        return buildNumber;
     }
 
     @Override
