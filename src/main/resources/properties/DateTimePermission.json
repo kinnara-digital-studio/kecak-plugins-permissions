@@ -6,8 +6,18 @@
         "name": "dateTimeFormat",
         "label": "@@dateTimePermission.dateTimeFormat@@",
         "description": "@@dateTimePermission.dateTimeFormat.desc@@",
-        "type": "textfield",
+        "type": "selectbox",
         "required": "true",
+        "options": [
+          {
+            "value": "dd-MM-yyyy",
+            "label": "dd-MM-yyyy"
+          },
+          {
+            "value": "dd-MM-yyyy hh:mm",
+            "label": "dd-MM-yyyy hh:mm"
+          }
+        ],
         "value": "dd-MM-yyyy"
       },
       {
