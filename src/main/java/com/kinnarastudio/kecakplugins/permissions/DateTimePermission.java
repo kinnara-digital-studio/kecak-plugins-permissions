@@ -2,6 +2,7 @@ package com.kinnarastudio.kecakplugins.permissions;
 
 import com.kinnarastudio.commons.Try;
 import org.joget.apps.app.service.AppUtil;
+import org.joget.apps.form.model.FormData;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.Permission;
 import org.joget.apps.userview.model.UserviewAccessPermission;
@@ -9,6 +10,7 @@ import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -25,7 +27,20 @@ public class DateTimePermission extends Permission implements FormPermission, Us
 
     @Override
     public boolean isAuthorize() {
-        final Date now = new Date();
+        String compareTo = getCompareTo();
+
+        final Date now;
+        if (compareTo != null && !compareTo.equalsIgnoreCase("")) {
+            Date tempDate = null;
+            try {
+                tempDate = getDateTimeFormat().parse(compareTo);
+            } catch (ParseException e) {
+                LogUtil.error(getClassName(), e, e.getMessage());
+            }
+            now = tempDate != null ? tempDate : new Date();
+        } else {
+            now = new Date();
+        }
 
         final String operator = getOperator();
 
@@ -38,8 +53,12 @@ public class DateTimePermission extends Permission implements FormPermission, Us
                 return Arrays.stream(values).noneMatch(now::equals);
             case ">":
                 return Arrays.stream(values).findFirst().map(now::after).orElse(false);
+            case ">=":
+                return Arrays.stream(values).findFirst().map(value -> now.after(value) || now.equals(value)).orElse(false);
             case "<":
                 return Arrays.stream(values).findFirst().map(now::before).orElse(false);
+            case "<=":
+                return Arrays.stream(values).findFirst().map(value -> now.before(value) || now.equals(value)).orElse(false);
             default:
                 return false;
         }
@@ -76,8 +95,9 @@ public class DateTimePermission extends Permission implements FormPermission, Us
     @Override
     public String getPropertyOptions() {
         final DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        final String[] args = new String[]{df.format(new Date())};
-        return AppUtil.readPluginResource(getClassName(), "/properties/DateTimePermission.json", args, false, "/messages/DateTimePermission");
+        final String[] args = new String[] { df.format(new Date()) };
+        return AppUtil.readPluginResource(getClassName(), "/properties/DateTimePermission.json", args, false,
+                "/messages/DateTimePermission");
     }
 
     protected Date[] getValues() {
@@ -97,5 +117,9 @@ public class DateTimePermission extends Permission implements FormPermission, Us
 
     protected String getOperator() {
         return getPropertyString("operator");
+    }
+
+    protected String getCompareTo() {
+        return getPropertyString("compareField");
     }
 }

@@ -21,6 +21,13 @@
         "value": "dd-MM-yyyy"
       },
       {
+        "name": "compareField",
+        "label": "Compare Field",
+        "type": "textfield",
+        "required": "true",
+        "value": "currentDate"
+      },
+      {
         "name": "operator",
         "label": "@@dateTimePermission.operator@@",
         "description": "@@dateTimePermission.operator.desc@@",
@@ -36,8 +43,16 @@
             "label": "@@dateTimePermission.operator.after@@"
           },
           {
+            "value": ">=",
+            "label": "After or Equal To"
+          },
+          {
             "value": "<",
             "label": "@@dateTimePermission.operator.before@@"
+          },
+          {
+            "value": "<=",
+            "label": "Before or Equal To"
           },
           {
             "value": "<>",
