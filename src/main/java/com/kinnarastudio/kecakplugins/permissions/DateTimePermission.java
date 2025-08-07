@@ -2,7 +2,6 @@ package com.kinnarastudio.kecakplugins.permissions;
 
 import com.kinnarastudio.commons.Try;
 import org.joget.apps.app.service.AppUtil;
-import org.joget.apps.form.model.FormData;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.Permission;
 import org.joget.apps.userview.model.UserviewAccessPermission;
@@ -17,7 +16,6 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Date Time Permission
@@ -29,7 +27,7 @@ public class DateTimePermission extends Permission implements FormPermission, Us
     public boolean isAuthorize() {
         String compareTo = getCompareTo();
 
-        final Date now;
+        final Date dateTime;
         if (compareTo != null && !compareTo.equalsIgnoreCase("")) {
             Date tempDate = null;
             try {
@@ -37,9 +35,9 @@ public class DateTimePermission extends Permission implements FormPermission, Us
             } catch (ParseException e) {
                 LogUtil.error(getClassName(), e, e.getMessage());
             }
-            now = tempDate != null ? tempDate : new Date();
+            dateTime = tempDate != null ? tempDate : new Date();
         } else {
-            now = new Date();
+            dateTime = new Date();
         }
 
         final String operator = getOperator();
@@ -48,17 +46,17 @@ public class DateTimePermission extends Permission implements FormPermission, Us
 
         switch (operator) {
             case "=":
-                return Arrays.asList(values).contains(now);
+                return Arrays.asList(values).contains(dateTime);
             case "<>":
-                return Arrays.stream(values).noneMatch(now::equals);
+                return Arrays.stream(values).noneMatch(dateTime::equals);
             case ">":
-                return Arrays.stream(values).findFirst().map(now::after).orElse(false);
+                return Arrays.stream(values).findFirst().map(dateTime::after).orElse(false);
             case ">=":
-                return Arrays.stream(values).findFirst().map(value -> now.after(value) || now.equals(value)).orElse(false);
+                return Arrays.stream(values).findFirst().map(value -> dateTime.after(value) || dateTime.equals(value)).orElse(false);
             case "<":
-                return Arrays.stream(values).findFirst().map(now::before).orElse(false);
+                return Arrays.stream(values).findFirst().map(dateTime::before).orElse(false);
             case "<=":
-                return Arrays.stream(values).findFirst().map(value -> now.before(value) || now.equals(value)).orElse(false);
+                return Arrays.stream(values).findFirst().map(value -> dateTime.before(value) || dateTime.equals(value)).orElse(false);
             default:
                 return false;
         }
