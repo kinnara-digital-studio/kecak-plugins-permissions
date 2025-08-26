@@ -8,13 +8,11 @@ import org.joget.apps.userview.model.UserviewAccessPermission;
 import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
 
+import javax.annotation.Nonnull;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.Predicate;
 
 /**
@@ -98,14 +96,18 @@ public class DateTimePermission extends Permission implements FormPermission, Us
                 "/messages/DateTimePermission");
     }
 
+    @Nonnull
     protected Date[] getValues() {
         final DateFormat df = getDateTimeFormat();
-        return Optional.ofNullable(getPropertyString("values"))
+        return Optional.of("values")
+                .map(this::getPropertyString)
+                .map(s -> AppUtil.processHashVariable(s, null, null, null))
                 .map(s -> s.split(";"))
                 .stream()
                 .flatMap(Arrays::stream)
                 .filter(Predicate.not(String::isEmpty))
                 .map(Try.onFunction(df::parse))
+                .filter(Objects::nonNull)
                 .toArray(Date[]::new);
     }
 
