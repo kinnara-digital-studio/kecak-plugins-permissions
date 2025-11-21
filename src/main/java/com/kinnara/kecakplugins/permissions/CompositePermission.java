@@ -19,12 +19,6 @@ public class CompositePermission extends UserviewPermission implements FormPermi
         UserviewPermission permission1 = Utilities.getPermissionObject(this, "permission1");
         UserviewPermission permission2 = Utilities.getPermissionObject(this, "permission2");
 
-        if(debug) {
-            LogUtil.info(getClassName(), "Condition ["+getPropertyString("condition")+"] "
-                    + "validator 1 class [" + (permission1 == null ? "" : permission1.getClassName()) + "] result [" + permission1.isAuthorize() + "] "
-                    + "validator 2 class [" + (permission2 == null ? "" : permission2.getClassName()) + "] result [" + permission2.isAuthorize() + "]");
-        }
-
         if("and".equalsIgnoreCase(getPropertyString("condition"))) {
             return isAuthorized(permission1) && isAuthorized(permission2);
         } else {
