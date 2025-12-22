@@ -48,13 +48,13 @@ public class DateTimePermission extends Permission implements FormPermission, Us
             case "<>":
                 return Arrays.stream(values).noneMatch(dateTime::equals);
             case ">":
-                return Arrays.stream(values).findFirst().map(dateTime::after).orElse(false);
+                return Arrays.stream(values).filter(Objects::nonNull).findFirst().map(dateTime::after).orElse(false);
             case ">=":
-                return Arrays.stream(values).findFirst().map(value -> dateTime.after(value) || dateTime.equals(value)).orElse(false);
+                return Arrays.stream(values).filter(Objects::nonNull).findFirst().map(value -> dateTime.after(value) || dateTime.equals(value)).orElse(false);
             case "<":
-                return Arrays.stream(values).findFirst().map(dateTime::before).orElse(false);
+                return Arrays.stream(values).filter(Objects::nonNull).findFirst().map(dateTime::before).orElse(false);
             case "<=":
-                return Arrays.stream(values).findFirst().map(value -> dateTime.before(value) || dateTime.equals(value)).orElse(false);
+                return Arrays.stream(values).filter(Objects::nonNull).findFirst().map(value -> dateTime.before(value) || dateTime.equals(value)).orElse(false);
             default:
                 return false;
         }
@@ -105,6 +105,7 @@ public class DateTimePermission extends Permission implements FormPermission, Us
                 .map(s -> s.split(";"))
                 .stream()
                 .flatMap(Arrays::stream)
+                .filter(Objects::nonNull)
                 .filter(Predicate.not(String::isEmpty))
                 .map(Try.onFunction(df::parse))
                 .filter(Objects::nonNull)
