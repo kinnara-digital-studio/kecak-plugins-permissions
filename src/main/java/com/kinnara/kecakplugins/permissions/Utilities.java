@@ -4,8 +4,14 @@ import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
-
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.Element;
+import java.util.function.Supplier;
 import java.util.Map;
+import java.util.*;
+import org.joget.commons.util.LogUtil;
+
+
 
 public class Utilities {
     public static UserviewPermission getPermissionObject(UserviewPermission plugin, String permissionPropertyName) {
@@ -30,5 +36,31 @@ public class Utilities {
         permission.setCurrentUser(plugin.getCurrentUser());
 
         return permission;
+    }
+
+    public static <T> T getFromCache(String cacheKey, Supplier<T> ifNoCache) {
+
+        final Cache cache = (Cache) AppUtil.getApplicationContext().getBean("fluCache");
+
+        Element cached = cache.get(cacheKey);
+        if (cached != null) {
+            T value = (T) cached.getObjectValue();
+            assert Objects.nonNull(value);
+
+            LogUtil.info(Utilities.class.getName(), "Cache hit for key [" + cacheKey + "]");
+            LogUtil.debug(Utilities.class.getName(), "Cache hit for key [" + cacheKey + "] value [" + value + "]");
+
+            return value;
+        }
+
+        assert Objects.nonNull(ifNoCache);
+
+        T value = Objects.requireNonNull(ifNoCache).get();
+
+        if (value != null) {
+            cache.put(new Element(cacheKey, value));
+        }
+
+        return value;
     }
 }

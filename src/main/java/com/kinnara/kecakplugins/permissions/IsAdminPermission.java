@@ -7,7 +7,9 @@ import org.joget.workflow.util.WorkflowUtil;
 public class IsAdminPermission extends UserviewPermission implements FormPermission {
     @Override
     public boolean isAuthorize() {
-        return WorkflowUtil.isCurrentUserInRole(WorkflowUtil.ROLE_ADMIN);
+        String username = WorkflowUtil.getCurrentUsername();
+        String cacheKey = String.join("::", getClassName(), username);
+        return Utilities.getFromCache(cacheKey, () -> WorkflowUtil.isCurrentUserInRole(WorkflowUtil.ROLE_ADMIN));
     }
 
     @Override
