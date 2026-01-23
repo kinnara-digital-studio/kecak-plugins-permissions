@@ -1,0 +1,13 @@
+[
+  {
+    "title": "Servlet Request Permission",
+    "properties": [
+      {
+        "name":"urlRegexPattern",
+        "label": "URL Regex Matcher",
+        "type": "textfield",
+        "required": "true"
+      }
+    ]
+  }
+]
