@@ -14,8 +14,8 @@
             "label": "dd-MM-yyyy"
           },
           {
-            "value": "dd-MM-yyyy hh:mm",
-            "label": "dd-MM-yyyy hh:mm"
+            "value": "dd-MM-yyyy HH:mm",
+            "label": "dd-MM-yyyy HH:mm"
           }
         ],
         "value": "dd-MM-yyyy"
