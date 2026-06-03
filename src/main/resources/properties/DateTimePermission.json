@@ -8,16 +8,7 @@
         "description": "@@dateTimePermission.dateTimeFormat.desc@@",
         "type": "selectbox",
         "required": "true",
-        "options": [
-          {
-            "value": "dd-MM-yyyy",
-            "label": "dd-MM-yyyy"
-          },
-          {
-            "value": "dd-MM-yyyy HH:mm",
-            "label": "dd-MM-yyyy HH:mm"
-          }
-        ],
+        "options": %s,
         "value": "dd-MM-yyyy"
       },
       {

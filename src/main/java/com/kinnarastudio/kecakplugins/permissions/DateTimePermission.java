@@ -1,12 +1,16 @@
 package com.kinnarastudio.kecakplugins.permissions;
 
 import com.kinnarastudio.commons.Try;
+import com.kinnarastudio.commons.jsonstream.JSONCollectors;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.Permission;
 import org.joget.apps.userview.model.UserviewAccessPermission;
 import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.annotation.Nonnull;
 import java.text.DateFormat;
@@ -20,6 +24,15 @@ import java.util.function.Predicate;
  */
 public class DateTimePermission extends Permission implements FormPermission, UserviewAccessPermission {
     public final static String LABEL = "Date Time Permission";
+
+    public final static String[] dateFormat = new String[]{
+            "dd-MM-yyyy",
+            "dd-MM-yyyy HH:mm",
+            "dd-MM-yyyy HH:mm:ss",
+            "yyyy-MM-dd",
+            "yyyy-MM-dd HH:mm",
+            "yyyy-MM-dd HH:mm:ss"
+    };
 
     @Override
     public boolean isAuthorize() {
@@ -37,6 +50,8 @@ public class DateTimePermission extends Permission implements FormPermission, Us
         } else {
             dateTime = new Date();
         }
+
+        LogUtil.info(getClassName(), "dateTime [" + dateTime + "]");
 
         final String operator = getOperator();
 
@@ -107,7 +122,22 @@ public class DateTimePermission extends Permission implements FormPermission, Us
     @Override
     public String getPropertyOptions() {
         final DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        final String[] args = new String[]{df.format(new Date())};
+
+        JSONArray dateTimeFormat = Arrays.stream(dateFormat)
+                .map(s -> new JSONObject() {{
+                    try {
+                        put("value", s);
+                        put("label", s);
+                    } catch (JSONException ignored) {
+                    }
+                }})
+                .collect(JSONCollectors.toJSONArray());
+
+        final String[] args = new String[]{
+                dateTimeFormat.toString(),
+                df.format(new Date())
+        };
+
         return AppUtil.readPluginResource(getClassName(), "/properties/DateTimePermission.json", args, false,
                 "/messages/DateTimePermission");
     }
