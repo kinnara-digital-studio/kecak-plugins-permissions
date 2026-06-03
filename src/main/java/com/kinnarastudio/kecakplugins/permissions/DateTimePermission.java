@@ -55,6 +55,22 @@ public class DateTimePermission extends Permission implements FormPermission, Us
                 return Arrays.stream(values).filter(Objects::nonNull).findFirst().map(dateTime::before).orElse(false);
             case "<=":
                 return Arrays.stream(values).filter(Objects::nonNull).findFirst().map(value -> dateTime.before(value) || dateTime.equals(value)).orElse(false);
+            case "between":
+                return Arrays.stream(values).filter(Objects::nonNull).findFirst()
+                        .map(value -> dateTime.after(value) || dateTime.equals(value))
+                        .orElse(false)
+                        &&
+                        Arrays.stream(values).filter(Objects::nonNull).skip(1).findFirst()
+                                .map(value -> dateTime.before(value) || dateTime.equals(value))
+                                .orElse(false);
+            case "notBetween":
+                return !(Arrays.stream(values).filter(Objects::nonNull).findFirst()
+                        .map(value -> dateTime.after(value) || dateTime.equals(value))
+                        .orElse(false)
+                        &&
+                        Arrays.stream(values).filter(Objects::nonNull).skip(1).findFirst()
+                                .map(value -> dateTime.before(value) || dateTime.equals(value))
+                                .orElse(false));
             default:
                 return false;
         }
@@ -91,7 +107,7 @@ public class DateTimePermission extends Permission implements FormPermission, Us
     @Override
     public String getPropertyOptions() {
         final DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        final String[] args = new String[] { df.format(new Date()) };
+        final String[] args = new String[]{df.format(new Date())};
         return AppUtil.readPluginResource(getClassName(), "/properties/DateTimePermission.json", args, false,
                 "/messages/DateTimePermission");
     }

@@ -22,8 +22,9 @@
       },
       {
         "name": "compareField",
-        "label": "Compare Field",
-        "type": "textfield"
+        "label": "Compare",
+        "type": "textfield",
+        "description": "@@dateTimePermission.compareField.desc@@"
       },
       {
         "name": "operator",
@@ -55,6 +56,14 @@
           {
             "value": "<>",
             "label": "@@dateTimePermission.operator.notEquals@@"
+          },
+          {
+            "value": "between",
+            "label": "@@dateTimePermission.operator.between@@"
+          },
+          {
+            "value": "notBetween",
+            "label": "@@dateTimePermission.operator.notBetween@@"
           }
         ]
       },
