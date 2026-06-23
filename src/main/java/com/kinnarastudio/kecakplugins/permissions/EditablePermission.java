@@ -7,6 +7,7 @@ import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.form.service.FormUtil;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
+import org.kecak.apps.form.model.FormPermissionDefault;
 
 import java.util.ResourceBundle;
 
@@ -16,7 +17,7 @@ import java.util.ResourceBundle;
  * Make objects readonly if don't have permission instead of invisible
  *
  */
-public class EditablePermission extends UserviewPermission implements FormPermission {
+public class EditablePermission extends FormPermissionDefault {
     @Override
     public boolean isAuthorize() {
         UserviewPermission editabilityPermission = Utilities.getPermissionObject(this, "editabilityPermission");

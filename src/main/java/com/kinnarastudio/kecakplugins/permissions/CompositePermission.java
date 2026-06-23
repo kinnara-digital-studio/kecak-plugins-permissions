@@ -7,6 +7,7 @@ import org.joget.apps.userview.model.Permission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
+import org.kecak.apps.form.model.FormPermissionDefault;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -15,7 +16,7 @@ import java.util.ResourceBundle;
  * @author aristo
  * Execute 2 permission
  */
-public class CompositePermission extends UserviewPermission implements FormPermission {
+public class CompositePermission extends FormPermissionDefault {
     @Override
     public boolean isAuthorize() {
         final PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean("pluginManager");
@@ -29,8 +30,8 @@ public class CompositePermission extends UserviewPermission implements FormPermi
 
         if (debug) {
             LogUtil.info(getClassName(), "Condition [" + condition + "] "
-                    + "validator 1 class [" + (permission1 == null ? "" : permission1.getClassName()) + "] result [" + isAuthorized(permission1) + "] "
-                    + "validator 2 class [" + (permission2 == null ? "" : permission2.getClassName()) + "] result [" + isAuthorized(permission2) + "]");
+                    + "permission 1 class [" + (permission1 == null ? "" : permission1.getClassName()) + "] result [" + isAuthorized(permission1) + "] "
+                    + "permission 2 class [" + (permission2 == null ? "" : permission2.getClassName()) + "] result [" + isAuthorized(permission2) + "]");
         }
 
         if ("and".equalsIgnoreCase(getPropertyString("condition"))) {
@@ -41,6 +42,11 @@ public class CompositePermission extends UserviewPermission implements FormPermi
     }
 
     protected boolean isAuthorized(Permission permission) {
+        if(permission instanceof FormPermission) {
+            ((FormPermission) permission).setFormData(getFormData());
+            ((FormPermission) permission).setElement(getElement());
+        }
+        
         return permission == null || permission.isAuthorize();
     }
 

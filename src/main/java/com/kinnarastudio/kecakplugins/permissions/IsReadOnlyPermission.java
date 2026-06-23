@@ -5,6 +5,7 @@ import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.form.service.FormUtil;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
+import org.kecak.apps.form.model.FormPermissionDefault;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -19,11 +20,10 @@ import java.util.ResourceBundle;
  * Return true if placed in non form
  *
  */
-public class IsReadOnlyPermission extends UserviewPermission implements FormPermission {
+public class IsReadOnlyPermission extends FormPermissionDefault {
     @Override
     public boolean isAuthorize() {
         return Optional.ofNullable(getElement())
-                .filter(e -> Objects.nonNull(getFormData()))
                 .map(e -> FormUtil.isReadonly(e, getFormData()))
                 .orElse(true);
     }

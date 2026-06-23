@@ -5,6 +5,7 @@ import org.joget.apps.form.model.FormData;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
+import org.kecak.apps.form.model.FormPermissionDefault;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -14,7 +15,7 @@ import java.util.ResourceBundle;
  *
  * Returns true when contains no data (form data or primary key is NULL)
  */
-public class OnDataCreationPermission extends UserviewPermission implements FormPermission {
+public class OnDataCreationPermission extends FormPermissionDefault {
     @Override
     public boolean isAuthorize() {
         return !Optional.ofNullable(getFormData())

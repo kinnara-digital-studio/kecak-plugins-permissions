@@ -1,32 +1,38 @@
 package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppUtil;
-import org.joget.apps.form.model.FormPermission;
-import org.joget.apps.userview.model.UserviewPermission;
+import org.joget.apps.form.model.Element;
+import org.joget.apps.form.service.FormUtil;
+import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
-import org.joget.workflow.model.WorkflowProcess;
-import org.joget.workflow.model.service.WorkflowManager;
 import org.kecak.apps.form.model.FormPermissionDefault;
-import org.springframework.context.ApplicationContext;
 
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ProcessCreatorPermission extends FormPermissionDefault {
+public class IsInSubformPermission extends FormPermissionDefault {
+    public final static String LABEL = "Is In Subform Permission";
+
     @Override
     public boolean isAuthorize() {
-        if(getFormData() == null || getFormData().getPrimaryKeyValue() == null)
-            return true;
-
-        ApplicationContext appContext = AppUtil.getApplicationContext();
-        WorkflowManager workflowManager = (WorkflowManager) appContext.getBean("workflowManager");
-
-        WorkflowProcess process = workflowManager.getRunningProcessById(getFormData().getPrimaryKeyValue());
-        return process.getRequesterId().equals(getCurrentUser().getUsername());
+        LogUtil.info(getClassName(), "isAuthorize element [" + getElement() + "]");
+        return Optional.ofNullable(getElement())
+                .map(FormUtil::findRootForm)
+                .map(f -> {
+                    LogUtil.info(getClassName(), "root form [" + f.getProperty("id") + "]");
+                    return f;
+                })
+                .map(Element::getParent)
+                .map(f -> {
+                    LogUtil.info(getClassName(), "element [" + f.getProperty("id") + "]");
+                    return f;
+                })
+                .isPresent();
     }
 
     @Override
     public String getName() {
-        return "Process Creator Permission";
+        return LABEL;
     }
 
     @Override
@@ -44,7 +50,7 @@ public class ProcessCreatorPermission extends FormPermissionDefault {
 
     @Override
     public String getLabel() {
-        return getName();
+        return LABEL;
     }
 
     @Override

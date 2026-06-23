@@ -2,13 +2,14 @@ package com.kinnarastudio.kecakplugins.permissions;
 
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
+import org.joget.apps.userview.model.Permission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
 
 import java.util.Map;
 
 public class Utilities {
-    public static UserviewPermission getPermissionObject(UserviewPermission plugin, String permissionPropertyName) {
+    public static UserviewPermission getPermissionObject(Permission plugin, String permissionPropertyName) {
         PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean("pluginManager");
         Map<String, Object> propertyPermission = (Map<String, Object>)plugin.getProperty(permissionPropertyName);
         if(propertyPermission == null)
@@ -25,6 +26,7 @@ public class Utilities {
 
         if(permission instanceof FormPermission && plugin instanceof FormPermission) {
             ((FormPermission)permission).setFormData(((FormPermission)plugin).getFormData());
+            ((FormPermission)permission).setElement(((FormPermission)plugin).getElement());
         }
 
         permission.setCurrentUser(plugin.getCurrentUser());

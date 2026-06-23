@@ -11,6 +11,7 @@ import org.joget.plugin.base.PluginManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.kecak.apps.form.model.FormPermissionDefault;
 
 import javax.annotation.Nonnull;
 import java.text.DateFormat;
@@ -22,7 +23,7 @@ import java.util.function.Predicate;
 /**
  * Date Time Permission
  */
-public class DateTimePermission extends Permission implements FormPermission, UserviewAccessPermission {
+public class DateTimePermission extends FormPermissionDefault {
     public final static String LABEL = "Date Time Permission";
 
     public final static String[] dateFormat = new String[]{

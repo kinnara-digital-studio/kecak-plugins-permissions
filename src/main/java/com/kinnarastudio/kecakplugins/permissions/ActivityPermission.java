@@ -18,6 +18,7 @@ import org.joget.workflow.model.WorkflowProcess;
 import org.joget.workflow.model.service.WorkflowManager;
 import org.joget.workflow.util.WorkflowUtil;
 import org.json.JSONArray;
+import org.kecak.apps.form.model.FormPermissionDefault;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletException;
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ActivityPermission extends UserviewPermission implements FormPermission, PluginWebSupport {
+public class ActivityPermission extends FormPermissionDefault implements PluginWebSupport {
     @Override
     public boolean isAuthorize() {
         final FormData formData = getFormData();

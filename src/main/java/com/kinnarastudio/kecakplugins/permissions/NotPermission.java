@@ -4,7 +4,9 @@ import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
+import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.PluginManager;
+import org.kecak.apps.form.model.FormPermissionDefault;
 
 import java.util.ResourceBundle;
 
@@ -13,12 +15,22 @@ import java.util.ResourceBundle;
  * @author aristo
  * Negation of particular permission
  */
-public class NotPermission extends UserviewPermission implements FormPermission {
+public class NotPermission extends FormPermissionDefault {
     @Override
     public boolean isAuthorize() {
+        LogUtil.info(getClassName(), "isAuthorize element [" + getElement() + "]");
+
         UserviewPermission plugin = Utilities.getPermissionObject(this, "permission");
-        if(plugin != null)
+        if(plugin != null) {
+            LogUtil.info(getClassName(), "isAuthorize plugin [" + plugin + "]");
+
+            if(plugin instanceof FormPermission) {
+                FormPermission formPermission = (FormPermission) plugin;
+                formPermission.setElement(getElement());
+                formPermission.setFormData(getFormData());
+            }
             return !plugin.isAuthorize();
+        }
 
         return true;
     }

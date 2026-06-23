@@ -4,6 +4,7 @@ import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.FormPermission;
 import org.joget.apps.userview.model.UserviewPermission;
 import org.joget.plugin.base.PluginManager;
+import org.kecak.apps.form.model.FormPermissionDefault;
 
 import java.util.ResourceBundle;
 
@@ -12,7 +13,7 @@ import java.util.ResourceBundle;
  *
  * Get permission for current organization
  */
-public class OrganizationPermission extends UserviewPermission implements FormPermission {
+public class OrganizationPermission extends FormPermissionDefault {
     @Override
     public boolean isAuthorize() {
         return false;
