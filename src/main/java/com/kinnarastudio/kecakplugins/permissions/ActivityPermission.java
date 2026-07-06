@@ -44,6 +44,16 @@ public class ActivityPermission extends FormPermissionDefault implements PluginW
         WorkflowManager workflowManager = (WorkflowManager) AppUtil.getApplicationContext().getBean("workflowManager");
         WorkflowAssignment assignment = workflowManager.getAssignment(formData.getActivityId());
         if (assignment == null) {
+            String recordId = formData.getPrimaryKeyValue();
+            LogUtil.info(getClassName(), "recordId: " + recordId);
+            if (recordId == null || recordId.isEmpty()) {
+                return nonAssignment;
+            }
+            assignment = workflowManager.getAssignmentByRecordId(recordId, null, null, null);
+            LogUtil.info(getClassName(), "assignment: " + assignment);
+        }
+
+        if (assignment == null) {
             return nonAssignment;
         }
 
@@ -51,10 +61,11 @@ public class ActivityPermission extends FormPermissionDefault implements PluginW
         Matcher processIdMatcher = Pattern.compile("(?<=#)" + processId + "$").matcher(assignment.getProcessDefId());
 
         // processid matched and activities matched;
+        WorkflowAssignment finalAssignment = assignment;
         return processIdMatcher.find() && Arrays.stream(getPropertyString("activities").split(";"))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
-                .anyMatch(activityId -> activityId.equals(assignment.getActivityDefId()));
+                .anyMatch(activityId -> activityId.equals(finalAssignment.getActivityDefId()));
     }
 
     @Override
@@ -114,7 +125,7 @@ public class ActivityPermission extends FormPermissionDefault implements PluginW
             try {
                 JSONArray jsonArray = new JSONArray();
                 PackageDefinition packageDefinition = appDef.getPackageDefinition();
-                Long packageVersion = packageDefinition != null ? packageDefinition.getVersion() : new Long(1);
+                Long packageVersion = packageDefinition != null ? packageDefinition.getVersion() : (1L);
                 Collection<WorkflowProcess> processList = workflowManager.getProcessList(appId, packageVersion.toString());
                 HashMap<String, String> empty = new HashMap<String, String>();
                 empty.put("value", "");
